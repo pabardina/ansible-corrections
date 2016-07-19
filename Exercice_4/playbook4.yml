@@ -1,0 +1,7 @@
+- hosts: all
+  become: yes
+
+  roles:
+  - apache
+  - { role: vhost, mail: exemple@domain.com, server_name: test.com }
+  - php

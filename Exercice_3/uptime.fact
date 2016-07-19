@@ -1,0 +1,49 @@
+#! /usr/bin/python
+
+import subprocess
+import re, sys
+import json
+
+p = subprocess.Popen(['/usr/bin/uptime',], stdout=subprocess.PIPE, shell=True, env={"LC_NUMERIC": "C", "LANG": "C", "LOCALE": "C"})
+#  12:32:41 up  3:04,  4 users,  load average: 0,09, 0,15, 0,20
+output, error = p.communicate()
+
+uptime = "N/A"
+users = "N/A"
+loads = { "1m": "N/A", "5m": "N/A", "15m": "N/A"}
+
+m1 = re.search("up ((\d+) days?,)?\s+(\d+):(\d+),", output)
+m2 = re.search("(\d+)\s+user(s)?", output)
+m3 = re.search("load\ average:\s+(\d+).(\d+),\ (\d+).(\d+),\ (\d+).(\d+)", output)
+
+if m1 is None:
+    m1 = re.search("up (\d+) min,", output)
+    g1 = m1.groups()
+    uptime = g1[0]
+else:
+    g1 = m1.groups()
+    if g1 is not None:
+        if g1[0] is not None:
+            uptime = (24 * int(g1[1]) + int(g1[2])) * 60 + int(g1[3])
+        else:
+            uptime = int(g1[2]) * 60 + int(g1[3])
+
+g2 = m2.groups()
+if g2 is not None:
+    users = int(g2[0])
+
+g3 = m3.groups()
+if g3 is None or len(g3) != 6:
+    loads = { "1m": "N/A", "5m": "N/A", "15m": "N/A"}
+else:
+    loads = { "la_1m": float("%s.%s" % (g3[0], g3[1])),
+              "la_5m": float("%s.%s" % (g3[2], g3[3])),
+              "la_15m": float("%s.%s" % (g3[4], g3[5]))
+    }
+
+result = { "uptime": uptime,
+           "users": users,
+           "load_averages": loads
+}
+
+print json.dumps(result)

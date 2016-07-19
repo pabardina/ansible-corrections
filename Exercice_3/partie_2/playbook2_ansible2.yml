@@ -1,0 +1,21 @@
+- hosts: all
+  become: yes
+
+  tasks:
+     
+   - name: load package for redhat
+     when: ansible_os_family == 'RedHat'
+     set_fact:
+       packages: [ httpd, php ]
+
+   - name: load package for debian
+     when: ansible_os_family == 'Debian'
+     set_fact:
+       packages: [ apache2, php5 ]
+
+   - name: Install package
+     package:
+       name: "{{ item }}"
+       state: present
+       update_cache: yes
+     with_items: "{{ packages }}"

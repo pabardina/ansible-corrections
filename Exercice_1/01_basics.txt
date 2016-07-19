@@ -1,0 +1,27 @@
+1. S’assurer que openssl et bash sont à jour sur tous les serveurs
+  Références :
+    https://docs.ansible.com/apt_module.html
+    https://docs.ansible.com/yum_module.html
+
+  # Pour RedHat et dérivés
+  $ ansible all -m yum -a "name=openssl,bash state=latest"
+  # Pour Debian et dérivés
+  $ ansible -i fichierHost all -m apt -a "name=openssl,bash update_cache=yes state=latest" --become --ask-sudo-pass
+
+  ==> --become ou ansible_ssh_pass dans le fichier host
+
+
+2. Créer un utilisateur ansible avec un shell /bin/bash
+  Référence : https://docs.ansible.com/user_module.html
+
+  $ ansible all -m user -a "name=ansible shell=/bin/bash"
+  $ ansible all -m user -a "name=ansible shell=/bin/bash" --become
+
+3. Installer notre clef publique ssh sur l'utilisateur ansible
+  $ ansible all -m authorized_key -a "user=ansible key='ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEAzO6LOYBe+9emAHxadT781/SvdVo4F4tChxk51xqBj+n1RiZHF+sBScGWhn9fnMlOm6zxhxLhGkymgiY4RSdkOcdLsyKOhJZDeA3Bue0RlrpHjgiU4Cw6uNQ/KbtZkT7s0CUFfI606jESW8cbkXBQmnLuLZmLyoH89NIbo/WRnm0= Yann'"
+
+4. S’assurer des bons droits sur /etc/passwd (0644) et /etc/shadow (0400).
+  Référence : https://docs.ansible.com/file_module.html
+  $ ansible all -m file -a "path=/etc/passwd mode=0644"
+  $ ansible all -m file -a "path=/etc/shadow mode=0400"
+

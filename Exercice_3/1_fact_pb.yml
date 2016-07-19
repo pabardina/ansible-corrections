@@ -1,0 +1,15 @@
+- hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Create facts directory
+      file:
+        path: /etc/ansible/facts.d
+        state: directory
+
+    - name: Deploy Facts
+      copy:
+        src: /home/localadmin/uptime.fact
+        dest: /etc/ansible/facts.d/uptime.fact
+        mode: u=rwx,g=rx,o=rx
+

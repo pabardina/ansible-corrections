@@ -1,0 +1,11 @@
+https://github.com/pabardina/ansible-lxc-dynamic
+
+si probleme : 
+chmox +x /usr/share/lxc/templates/lxc-ubuntu-ansible
+
+- inventaire dynamique
+- vault sur les variables
+
+- dans conteneurs :
+    - installer Mysql https://galaxy.ansible.com/geerlingguy/mysql/
+    - installer Apache + wordpress (role ansible galaxy)

@@ -1,0 +1,9 @@
+- hosts: tp
+  become: yes
+  tasks:
+  - name: Install Apache
+    yum: name=httpd state=present
+  - name: Install PHP (and mod_php)
+    yum: name=php state=present
+  - name: Ensure service is registered and running
+    service: name=httpd enabled=true state=started

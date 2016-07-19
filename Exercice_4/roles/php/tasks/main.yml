@@ -1,0 +1,14 @@
+- name: Install php
+  package:
+    name: php5
+    state: present
+
+- name: Install commande line tool git
+  package:
+    name: git
+    state: present
+
+- name: Copy php file
+  git:
+    repo: https://github.com/ObjectifLibre/ansible-php-app.git
+    dest: /srv/www/test.com

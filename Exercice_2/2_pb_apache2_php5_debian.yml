@@ -1,0 +1,14 @@
+- hosts: tp
+  become: yes
+  tasks:
+  - name: Install Apache, mod_php5, mod_python
+    apt: name=apache2,libapache2-mod-php5 state=present
+  - name: ensure mod_php5 is activated
+    command: /usr/sbin/a2enmod php5 creates=/etc/apache2/mods-enabled/php5.load
+    notify: Restart Apache2
+  - name: Ensure service is registered and running
+    service: name=apache2 enabled=true state=started
+
+  handlers:
+  - name: Restart Apache2
+    service: name=apache2 state=restarted

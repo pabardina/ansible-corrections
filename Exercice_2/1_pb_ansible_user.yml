@@ -1,0 +1,13 @@
+# tip : installer sudo
+
+- hosts: tp
+  sudo: yes
+  user: ansible
+  tasks:
+  - name: Creating ansible user
+    user: name=ansible state=present
+  - name: Install SSH public key for ansible user
+    authorized_key: user=ansible
+                    key="ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEAzO6LOYBe+9emAHxadT781/SvdVo4F4tChxk51xqBj+n1RiZHF+sBScGWhn9fnMlOm6zxhxLhGkymgiY4RSdkOcdLsyKOhJZDeA3Bue0RlrpHjgiU4Cw6uNQ/KbtZkT7s0CUFfI606jESW8cbkXBQmnLuLZmLyoH89NIbo/WRnm0= Yann"
+  - name: Sudo Rights for user ansible
+    lineinfile: dest=/etc/sudoers.d/ansible state=present create=yes line='ansible ALL=(ALL) NOPASSWD:ALL' validate='visudo -cf %s'

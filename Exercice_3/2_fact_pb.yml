@@ -1,0 +1,12 @@
+- hosts: localhost
+  become: yes
+
+  tasks:
+  - name: Load OK
+    debug: msg="Ca va... {{ ansible_local.uptime.load_averages.la_15m }} "
+    when: ansible_local.uptime.load_averages.la_15m < 1
+  - name: Load KO
+    debug: msg="Ca chauffe {{ ansible_local.uptime.load_averages.la_15m }} "
+    when: ansible_local.uptime.load_averages.la_15m >= 1
+
+

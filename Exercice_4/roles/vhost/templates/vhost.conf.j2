@@ -1,0 +1,18 @@
+<VirtualHost *:80>
+  ServerAdmin {{ mail }}
+  ServerName {{ server_name }}
+
+  DocumentRoot /srv/www/{{ server_name }}
+
+  <Directory /srv/www/{{ server_name }}>
+    Options Indexes
+    AllowOverride All
+    Require all granted
+  </Directory>
+
+  LogLevel error
+  ErrorLog /var/log/apache2/{{ server_name }}.error.log
+  CustomLog /var/log/apache2/{{ server_name}}.access.log combined
+
+  ServerSignature Off
+</VirtualHost>
