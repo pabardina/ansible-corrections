@@ -18,7 +18,7 @@
   $ ansible all -m user -a "name=ansible shell=/bin/bash" --become
 
 3. Installer notre clef publique ssh sur l'utilisateur ansible
-  $ ansible all -m authorized_key -a "user=ansible key='ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEAzO6LOYBe+9emAHxadT781/SvdVo4F4tChxk51xqBj+n1RiZHF+sBScGWhn9fnMlOm6zxhxLhGkymgiY4RSdkOcdLsyKOhJZDeA3Bue0RlrpHjgiU4Cw6uNQ/KbtZkT7s0CUFfI606jESW8cbkXBQmnLuLZmLyoH89NIbo/WRnm0= Yann'"
+  $ ansible all -m authorized_key -a "user=ansible key='ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEAzO6LOYBe+9emAHxadT781/SvddsfqsdVo4F4tChxk51xqBj+n1RiZHF+sBScGWhn9fnMlOm6zxhxLhGkymgiY4RSdkOcdLsyKOhJZDeA3Bue0RlrpHjgiU4Cw6uNQ/KbtZkT7s0CUFfI606jESW8cbkXBQmnLuLZmLyoH89NIbo/WRnm0= Yann'"
 
 4. S’assurer des bons droits sur /etc/passwd (0644) et /etc/shadow (0400).
   Référence : https://docs.ansible.com/file_module.html
