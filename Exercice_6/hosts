@@ -1,0 +1,5 @@
+[gogs]
+localhost
+
+[gogs:vars]
+ansible_ssh_user=cloud
